@@ -1,0 +1,171 @@
+
+/* Globals */
+
+:root {
+  --sidebar-width: 300px;
+  --page-padding: 15px;
+  --content-max-width: 750px;
+  --menu-bar-height: 50px;
+
+  /* === Nord Theme === */
+  /* --> Polar Night */
+  --nord0: #2E3440;
+  --nord1: #3B4252;
+  --nord2: #434C5E;
+  --nord3: #4C566A;
+  /* --> Snow Storm */
+  --nord4: #D8DEE9;
+  --nord5: #E5E9F0;
+  --nord6: #ECEFF4;
+  /* --> Frost */
+  --nord7: #8FBCBB;
+  --nord8: #88C0DD;
+  --nord9: #81A1C1;
+  --nord10: #5E81AC;
+  /* --> Aurora */
+  --nord11: #BF616A;
+  --nord12: #D08770;
+  --nord13: #EBCB8B;
+  --nord14: #A3BE8C;
+  --nord15: #B48EAD;
+}
+
+/* Themes */
+
+.light {
+  --bg: var(--nord4);
+  --fg: var(--nord0);
+
+  --sidebar-bg: var(--nord6);
+  --sidebar-fg: var(--nord3);
+  --sidebar-non-existant: var(--nord9);
+  --sidebar-active: var(--links);
+  --sidebar-spacer: var(--sidebar-non-existant);
+
+  --scrollbar: var(--sidebar-active);
+
+  --icons: var(--sidebar-non-existant);
+  --icons-hover: var(--fg);
+
+  --links: var(--nord11);
+
+  --inline-code-color: var(--sidebar-fg);
+
+  --theme-popup-bg: var(--sidebar-bg);
+  --theme-popup-border: var(--sidebar-non-existant);
+  --theme-hover: var(--nord8);
+
+  --quote-bg: var(--sidebar-bg);
+  --quote-border: var(--nord5);
+
+  --table-border-color: var(--fg);
+  --table-header-bg: var(--bg);
+  --table-alternate-bg: var(--sidebar-bg);
+
+  --searchbar-border-color: var(--sidebar-non-existant);
+  --searchbar-bg: var(--sidebar-bg);
+  --searchbar-fg: var(--sidebar-fg);
+  --searchbar-shadow-color: var(--quote-border);
+  --searchresults-header-fg: var(--nord14);
+  --searchresults-border-color: var(--fg);
+  --searchresults-li-bg: var(--nord15);
+  --search-mark-bg: var(--nord13);
+}
+
+.light blockquote {
+  color: var(--nord3);
+}
+
+.light table tbody tr:nth-child(2n) {
+    color: var(--sidebar-fg);
+}
+
+.dark {
+  --bg: var(--nord2);
+  --fg: var(--nord6);
+
+  --sidebar-bg: var(--nord0);
+  --sidebar-fg: var(--nord4);
+  --sidebar-non-existant: var(--nord9);
+  --sidebar-active: var(--links);
+  --sidebar-spacer: var(--sidebar-non-existant);
+
+  --scrollbar: var(--sidebar-active);
+
+  --icons: var(--sidebar-non-existant);
+  --icons-hover: var(--fg);
+
+  --links: var(--nord12);
+
+  --inline-code-color: var(--sidebar-fg);
+
+  --theme-popup-bg: var(--sidebar-bg);
+  --theme-popup-border: var(--sidebar-non-existant);
+  --theme-hover: var(--nord10);
+
+  --quote-bg: var(--sidebar-bg);
+  --quote-border: var(--nord1);
+
+  --table-border-color: var(--fg);
+  --table-header-bg: var(--bg);
+  --table-alternate-bg: var(--sidebar-bg);
+
+  --searchbar-border-color: var(--sidebar-non-existant);
+  --searchbar-bg: var(--sidebar-bg);
+  --searchbar-fg: var(--sidebar-fg);
+  --searchbar-shadow-color: var(--quote-border);
+  --searchresults-header-fg: var(--nord14);
+  --searchresults-border-color: var(--fg);
+  --searchresults-li-bg: var(--nord15);
+  --search-mark-bg: var(--nord13);
+}
+
+.dark table tbody tr:nth-child(2n) {
+    color: var(--sidebar-fg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .light.no-js {
+    --bg: var(--nord2);
+    --fg: var(--nord6);
+
+    --sidebar-bg: var(--nord0);
+    --sidebar-fg: var(--nord4);
+    --sidebar-non-existant: var(--nord9);
+    --sidebar-active: var(--links);
+    --sidebar-spacer: var(--sidebar-non-existant);
+
+    --scrollbar: var(--sidebar-active);
+
+    --icons: var(--sidebar-non-existant);
+    --icons-hover: var(--fg);
+
+    --links: var(--nord12);
+
+    --inline-code-color: var(--sidebar-fg);
+
+    --theme-popup-bg: var(--sidebar-bg);
+    --theme-popup-border: var(--sidebar-non-existant);
+    --theme-hover: var(--nord10);
+
+    --quote-bg: var(--sidebar-bg);
+    --quote-border: var(--nord1);
+
+    --table-border-color: var(--fg);
+    --table-header-bg: var(--bg);
+    --table-alternate-bg: var(--sidebar-bg);
+
+    --searchbar-border-color: var(--sidebar-non-existant);
+    --searchbar-bg: var(--sidebar-bg);
+    --searchbar-fg: var(--sidebar-fg);
+    --searchbar-shadow-color: var(--quote-border);
+    --searchresults-header-fg: var(--nord14);
+    --searchresults-border-color: var(--fg);
+    --searchresults-li-bg: var(--nord15);
+    --search-mark-bg: var(--nord13);
+  }
+
+  .light.no-js table tbody tr:nth-child(2n) {
+    color: var(--sidebar-fg);
+  }
+}
