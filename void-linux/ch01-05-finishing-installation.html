@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installing Void - Gabriel Sanches's Handbook</title>
+        <title>Finishing installation - Gabriel Sanches's Handbook</title>
         
         
 
@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../about.html">This handbook</a></li><li class="chapter-item expanded affix "><li class="part-title">Distros</li><li class="chapter-item expanded "><a href="../void-linux/ch-00-index.html"><strong aria-hidden="true">1.</strong> Void Linux</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch-01-00-introduction.html" class="active"><strong aria-hidden="true">1.1.</strong> Installing Void</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch-01-01-live-iso.html"><strong aria-hidden="true">1.1.1.</strong> Live ISO</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-02-formatting-disks.html"><strong aria-hidden="true">1.1.2.</strong> Formatting disks</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-03-installing-the-system.html"><strong aria-hidden="true">1.1.3.</strong> Installing the system</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-04-inside-the-chroot-jail.html"><strong aria-hidden="true">1.1.4.</strong> Inside the chroot jail</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-05-finishing-installation.html"><strong aria-hidden="true">1.1.5.</strong> Finishing installation</a></li></ol></li><li class="chapter-item expanded "><a href="../void-linux/ch-02-00-introduction.html"><strong aria-hidden="true">1.2.</strong> Post-installation</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../about.html">This handbook</a></li><li class="chapter-item expanded affix "><li class="part-title">Distros</li><li class="chapter-item expanded "><a href="../void-linux/ch00-index.html"><strong aria-hidden="true">1.</strong> Void Linux</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch01-00-introduction.html"><strong aria-hidden="true">1.1.</strong> Installing Void</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch01-01-live-iso.html"><strong aria-hidden="true">1.1.1.</strong> Live ISO</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-02-formatting-disks.html"><strong aria-hidden="true">1.1.2.</strong> Formatting disks</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-03-installing-the-system.html"><strong aria-hidden="true">1.1.3.</strong> Installing the system</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-04-inside-the-chroot-jail.html"><strong aria-hidden="true">1.1.4.</strong> Inside the chroot jail</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-05-finishing-installation.html" class="active"><strong aria-hidden="true">1.1.5.</strong> Finishing installation</a></li></ol></li><li class="chapter-item expanded "><a href="../void-linux/ch02-00-introduction.html"><strong aria-hidden="true">1.2.</strong> Post-installation</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,33 +157,64 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="installing-void"><a class="header" href="#installing-void">Installing Void</a></h1>
-<p>In this guide you will learn how to get a working installation of Void containing:</p>
-<ul>
-<li>btrfs with Zstandard compression</li>
-<li>LUKS-encrypted root and swapfile</li>
-<li>GRUB with UEFI</li>
-</ul>
-<p>Things you will <strong>not</strong> find in this handbook:</p>
-<ul>
-<li>Instructions for file systems other than btrfs</li>
-<li>Full disk encryption (there's an official guide
-<a href="https://docs.voidlinux.org/installation/guides/fde.html">here</a>)</li>
-<li>Reasoning for all choices I've made (sometimes I don't know the true reason behind my choices)</li>
-</ul>
+                        <h1 id="finishing-installation"><a class="header" href="#finishing-installation">Finishing installation</a></h1>
+<h2 id="intel-microcode"><a class="header" href="#intel-microcode">Intel microcode</a></h2>
+<pre><code class="language-console">chroot# xbps-install -Su void-repo-nonfree intel-ucode
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> If you're using an AMD CPU, install <code>linux-firmware-amd</code> instead.</p>
+</blockquote>
+<h2 id="grub"><a class="header" href="#grub">GRUB</a></h2>
+<pre><code class="language-console">chroot# xbps-install grub-x86_64-efi
+chroot# grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=&quot;Void Linux&quot;
+</code></pre>
+<h2 id="swapfile"><a class="header" href="#swapfile">Swapfile</a></h2>
+<p>In order to have an encrypted swap, let's use a more clean approach by using a <em>swapfile</em> for,
+<em>duh</em>, swap. For this example, I'll create a swapfile of 16 GiB, but you can choose the best size
+for your installation:</p>
+<pre><code class="language-console">chroot# btrfs subvolume create /var/swap
+chroot# truncate -s 0 /var/swap/swapfile
+chroot# chattr +C /var/swap/swapfile
+chroot# btrfs property set /var/swap/swapfile compression none
+chroot# chmod 600 /var/swap/swapfile
+chroot# dd if=/dev/zero of=/var/swap/swapfile bs=1G count=16 status=progress
+chroot# mkswap /var/swap/swapfile
+chroot# swapon /var/swap/swapfile
+</code></pre>
+<p>Now, you'll need a tool to calculate the <code>resume_offset</code> kernel parameter for btrfs. You can either
+follow <a href="https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs">this guide on Arch Linux's
+wiki</a>
+or you can use XBPS to build <a href="https://github.com/gbrlsnchs/void-packages/tree/btrfs_map_physical">a template I maintain
+myself</a> of the same code cited
+in Arch's wiki.</p>
+<p>After calculating the value, set it to a variable, let's say, <code>RESUME_OFFSET</code>, and append the
+following to GRUB's config:</p>
+<pre><code class="language-console">chroot# echo GRUB_CMDLINE_LINUX=&quot;resume=UUID=$ROOT_UUID resume_offset=$RESUME_OFFSET&quot; &gt;&gt; /etc/default/grub
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> This won't be an issue with Void, but be aware that you need Linux kernel version 5.0+
+in order to use a swapfile with btrfs.</p>
+</blockquote>
+<h2 id="regenerating-configurations"><a class="header" href="#regenerating-configurations">Regenerating configurations</a></h2>
+<p>Finally, regenerate configurations and reboot the machine:</p>
+<pre><code class="language-console">chroot# xbps-reconfigure -fa
+chroot# exit
+# umount -R /mnt
+# shutdown -r now
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../void-linux/ch-00-index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../void-linux/ch01-04-inside-the-chroot-jail.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../void-linux/ch-01-01-live-iso.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../void-linux/ch02-00-introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -195,13 +226,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../void-linux/ch-00-index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../void-linux/ch01-04-inside-the-chroot-jail.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../void-linux/ch-01-01-live-iso.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../void-linux/ch02-00-introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

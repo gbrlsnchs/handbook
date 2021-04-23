@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installing the system - Gabriel Sanches's Handbook</title>
+        <title>Installing Void - Gabriel Sanches's Handbook</title>
         
         
 
@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../about.html">This handbook</a></li><li class="chapter-item expanded affix "><li class="part-title">Distros</li><li class="chapter-item expanded "><a href="../void-linux/ch-00-index.html"><strong aria-hidden="true">1.</strong> Void Linux</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch-01-00-introduction.html"><strong aria-hidden="true">1.1.</strong> Installing Void</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch-01-01-live-iso.html"><strong aria-hidden="true">1.1.1.</strong> Live ISO</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-02-formatting-disks.html"><strong aria-hidden="true">1.1.2.</strong> Formatting disks</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-03-installing-the-system.html" class="active"><strong aria-hidden="true">1.1.3.</strong> Installing the system</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-04-inside-the-chroot-jail.html"><strong aria-hidden="true">1.1.4.</strong> Inside the chroot jail</a></li><li class="chapter-item expanded "><a href="../void-linux/ch-01-05-finishing-installation.html"><strong aria-hidden="true">1.1.5.</strong> Finishing installation</a></li></ol></li><li class="chapter-item expanded "><a href="../void-linux/ch-02-00-introduction.html"><strong aria-hidden="true">1.2.</strong> Post-installation</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../about.html">This handbook</a></li><li class="chapter-item expanded affix "><li class="part-title">Distros</li><li class="chapter-item expanded "><a href="../void-linux/ch00-index.html"><strong aria-hidden="true">1.</strong> Void Linux</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch01-00-introduction.html" class="active"><strong aria-hidden="true">1.1.</strong> Installing Void</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../void-linux/ch01-01-live-iso.html"><strong aria-hidden="true">1.1.1.</strong> Live ISO</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-02-formatting-disks.html"><strong aria-hidden="true">1.1.2.</strong> Formatting disks</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-03-installing-the-system.html"><strong aria-hidden="true">1.1.3.</strong> Installing the system</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-04-inside-the-chroot-jail.html"><strong aria-hidden="true">1.1.4.</strong> Inside the chroot jail</a></li><li class="chapter-item expanded "><a href="../void-linux/ch01-05-finishing-installation.html"><strong aria-hidden="true">1.1.5.</strong> Finishing installation</a></li></ol></li><li class="chapter-item expanded "><a href="../void-linux/ch02-00-introduction.html"><strong aria-hidden="true">1.2.</strong> Post-installation</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,51 +157,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="installing-the-system"><a class="header" href="#installing-the-system">Installing the system</a></h1>
-<h2 id="base-installation"><a class="header" href="#base-installation">Base installation</a></h2>
-<p>First, set some helper variables:</p>
-<pre><code class="language-console"># REPO=https://alpha.us.repo.voidlinux.org/current
-# ARCH=x86_64
-</code></pre>
-<p>If going for the <em>musl</em> variant, just reset the variables accordingly:</p>
-<pre><code class="language-console"># REPO=&quot;$REPO/musl&quot;
-# ARCH=&quot;$ARCH-musl&quot;
-</code></pre>
-<p>Then proceed to install the base system:</p>
-<pre><code class="language-console"># XBPS_ARCH=$ARCH xbps-install -S -R &quot;$REPO&quot; -r /mnt base-system btrfs-progs cryptsetup
-</code></pre>
-<blockquote>
-<p><strong>Note:</strong> The command above installs the base system (<code>base-system</code>), along with btrfs utilities
-(<code>btrfs-progs</code>) and dm-crypt utilities (<code>cryptsetup</code>).</p>
-</blockquote>
-<h2 id="running-chroot"><a class="header" href="#running-chroot">Running <code>chroot</code></a></h2>
-<p>Mount the pseudo file systems needed for chroot:</p>
-<pre><code class="language-console"># for dir in dev proc sys run; do mount --rbind /$dir /mnt/$dir; mount --make-rslave /mnt/$dir; done
-</code></pre>
-<p>Copy the DNS configuration into the new root so that XBPS can still download new packages inside the
-chroot:</p>
-<pre><code class="language-console"># cp /etc/resolv.conf /mnt/etc/
-</code></pre>
-<p>Finally, <code>chroot</code> into the new installation:</p>
-<pre><code class="language-console"># BTRFS_OPTS=$BTRFS_OPTS PS1='chroot# ' chroot /mnt/ /bin/bash
-</code></pre>
-<blockquote>
-<p><strong>Note:</strong> The variable <code>BTRFS_OPTS</code> is passed into the chroot so we can use it later when setting
-fstab (<code>/etc/fstab</code>).</p>
-</blockquote>
+                        <h1 id="installing-void"><a class="header" href="#installing-void">Installing Void</a></h1>
+<p>In this guide you will learn how to get a working installation of Void containing:</p>
+<ul>
+<li>btrfs with Zstandard compression</li>
+<li>LUKS-encrypted root and swapfile</li>
+<li>GRUB with UEFI</li>
+</ul>
+<p>Things you will <strong>not</strong> find in this handbook:</p>
+<ul>
+<li>Instructions for file systems other than btrfs</li>
+<li>Full disk encryption (there's an official guide
+<a href="https://docs.voidlinux.org/installation/guides/fde.html">here</a>)</li>
+<li>Reasoning for all choices I've made (sometimes I don't know the true reason behind my choices)</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../void-linux/ch-01-02-formatting-disks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../void-linux/ch00-index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../void-linux/ch-01-04-inside-the-chroot-jail.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../void-linux/ch01-01-live-iso.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -213,13 +195,13 @@ fstab (<code>/etc/fstab</code>).</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../void-linux/ch-01-02-formatting-disks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../void-linux/ch00-index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../void-linux/ch-01-04-inside-the-chroot-jail.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../void-linux/ch01-01-live-iso.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
