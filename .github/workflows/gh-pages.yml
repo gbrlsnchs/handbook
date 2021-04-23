@@ -27,3 +27,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./book
           commit_message: Publish book
+          cname: 'help.gsr.dev'
