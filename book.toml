@@ -10,7 +10,6 @@ additional-css = [
   "theme/light.css",
   "theme/dark.css",
 ]
-copy-fonts = false
 default-theme = "dark"
 preferred-dark-theme = "dark"
 
