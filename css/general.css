@@ -8,7 +8,7 @@
 }
 
 html {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Source Serif Pro", sans-serif;
     color: var(--fg);
     background-color: var(--bg);
     text-size-adjust: none;
@@ -16,26 +16,23 @@ html {
 
 body {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     overflow-x: hidden;
 }
 
 code {
-    font-family: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace !important;
-    font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
+    font-family: "JetBrains Mono", monospace, monospace !important;
+    font-size: 0.8em; /* please adjust the ace font size accordingly in editor.js */
+    white-space: pre;
 }
 
 kbd {
-    font-family: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace !important;
-    font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
+    font-family: "JetBrains Mono", monospace, monospace !important;
+    font-size: 0.8em; /* please adjust the ace font size accordingly in editor.js */
     padding: 1px 5px;
     border: 1px solid;
     border-radius: 5px;
-}
-
-/* Don't change font size in headers. */
-h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
-    font-size: unset;
+    white-space: pre;
 }
 
 .left { float: left; }
@@ -140,7 +137,7 @@ table tbody tr:nth-child(2n) {
 blockquote {
     margin: 20px 0;
     padding: 0 20px;
-    color: var(--fg);
+    color: var(--quote-fg);
     background-color: var(--quote-bg);
     border-top: .1em solid var(--quote-border);
     border-bottom: .1em solid var(--quote-border);
