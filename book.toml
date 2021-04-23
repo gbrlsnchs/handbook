@@ -3,10 +3,16 @@ authors = "Gabriel Sanches"
 language = "en"
 multilingual = false
 src = "src"
-title = "Nord Template"
+title = "Gabriel Sanches's Handbook"
 
 [output.html]
 additional-css = [
   "theme/light.css",
   "theme/dark.css",
 ]
+copy-fonts = false
+default-theme = "dark"
+preferred-dark-theme = "dark"
+
+[output.html.playground]
+copyable = false

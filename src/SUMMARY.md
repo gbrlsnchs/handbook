@@ -1,6 +1,6 @@
 # Summary
 
-[Nord template](README.md)
+[This handbook](about.md)
 
 # Label
 - [Sample 1](./sample-1.md)
