@@ -12,6 +12,7 @@ additional-css = [
 ]
 default-theme = "dark"
 preferred-dark-theme = "dark"
+git-repository-url = "https://github.com/gbrlsnchs/handbook"
 
 [output.html.playground]
 copyable = false
