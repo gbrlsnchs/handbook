@@ -7,9 +7,9 @@ information about Void on [the official website](https://voidlinux.org/).
 The first thing some people ask is why use Void and not Ubuntu (for its supposed simplicity), or
 even Arch (for rolling release).
 
-Well, I use Void because I value **minimalism** and **control** over as much features of my machine
-it is possible. Ubuntu is far from being minimalist and Arch abstracts too many functionalities to
-the systemd suite.
+Well, I use Void because I value _minimalism_ and _control_ over as much features of my machine it
+is possible. Ubuntu is far from being minimalist and Arch abstracts too many functionalities to the
+systemd suite.
 
 ## This chapter
 Having my reasonings behind picking Void being clarified, take note that configuring and maintaining

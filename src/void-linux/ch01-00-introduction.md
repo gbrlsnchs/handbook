@@ -4,7 +4,7 @@ In this guide you will learn how to get a working installation of Void containin
 - LUKS-encrypted root and swapfile
 - GRUB with UEFI
 
-Things you will **not** find in this handbook:
+Things you will _not_ find in this handbook:
 - Instructions for file systems other than btrfs
 - Full disk encryption (there's an official guide
   [here](https://docs.voidlinux.org/installation/guides/fde.html))
