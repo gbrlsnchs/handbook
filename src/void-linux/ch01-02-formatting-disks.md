@@ -56,8 +56,8 @@ For the root partition, it is necessary to first create _top-level subvolumes_:
 Then, proceed to mount them:
 ```console
 # mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/cryptroot /mnt
-# mkdir /mnt/home && mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt
-# mkdir /mnt/.snapshots && mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt
+# mkdir /mnt/home && mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt/home
+# mkdir /mnt/.snapshots && mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
 ```
 
 > **Note:** Those are the options and names I like to use for btrfs. Feel free to change them
