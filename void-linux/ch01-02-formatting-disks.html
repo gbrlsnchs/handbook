@@ -213,8 +213,8 @@ change it by pressing <kbd>t</kbd> and then selecting it (usually 20)</li>
 </code></pre>
 <p>Then, proceed to mount them:</p>
 <pre><code class="language-console"># mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/cryptroot /mnt
-# mkdir /mnt/home &amp;&amp; mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt
-# mkdir /mnt/.snapshots &amp;&amp; mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt
+# mkdir /mnt/home &amp;&amp; mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt/home
+# mkdir /mnt/.snapshots &amp;&amp; mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
 </code></pre>
 <blockquote>
 <p><strong>Note:</strong> Those are the options and names I like to use for btrfs. Feel free to change them

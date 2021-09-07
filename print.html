@@ -178,9 +178,9 @@ information about Void on <a href="https://voidlinux.org/">the official website<
 <h2 id="why"><a class="header" href="#why">Why</a></h2>
 <p>The first thing some people ask is why use Void and not Ubuntu (for its supposed simplicity), or
 even Arch (for rolling release).</p>
-<p>Well, I use Void because I value <strong>minimalism</strong> and <strong>control</strong> over as much features of my machine
-it is possible. Ubuntu is far from being minimalist and Arch abstracts too many functionalities to
-the systemd suite.</p>
+<p>Well, I use Void because I value <em>minimalism</em> and <em>control</em> over as much features of my machine it
+is possible. Ubuntu is far from being minimalist and Arch abstracts too many functionalities to the
+systemd suite.</p>
 <h2 id="this-chapter"><a class="header" href="#this-chapter">This chapter</a></h2>
 <p>Having my reasonings behind picking Void being clarified, take note that configuring and maintaining
 it requires some effort, but at the end of the day it totally pays off because you end up learning
@@ -195,7 +195,7 @@ interested in using it.</p>
 <li>LUKS-encrypted root and swapfile</li>
 <li>GRUB with UEFI</li>
 </ul>
-<p>Things you will <strong>not</strong> find in this handbook:</p>
+<p>Things you will <em>not</em> find in this handbook:</p>
 <ul>
 <li>Instructions for file systems other than btrfs</li>
 <li>Full disk encryption (there's an official guide
@@ -289,8 +289,8 @@ change it by pressing <kbd>t</kbd> and then selecting it (usually 20)</li>
 </code></pre>
 <p>Then, proceed to mount them:</p>
 <pre><code class="language-console"># mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/cryptroot /mnt
-# mkdir /mnt/home &amp;&amp; mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt
-# mkdir /mnt/.snapshots &amp;&amp; mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt
+# mkdir /mnt/home &amp;&amp; mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/cryptroot /mnt/home
+# mkdir /mnt/.snapshots &amp;&amp; mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
 </code></pre>
 <blockquote>
 <p><strong>Note:</strong> Those are the options and names I like to use for btrfs. Feel free to change them
