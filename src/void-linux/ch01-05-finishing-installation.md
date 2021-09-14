@@ -1,7 +1,12 @@
 # Finishing installation
+## Adding nonfree repository
+```console
+chroot# xbps-install void-repo-nonfree
+```
+
 ## Intel microcode
 ```console
-chroot# xbps-install -Su void-repo-nonfree intel-ucode
+chroot# xbps-install -Su intel-ucode
 ```
 
 > **Note:** If you're using an AMD CPU, install `linux-firmware-amd` instead.
