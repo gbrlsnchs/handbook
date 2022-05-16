@@ -23,7 +23,7 @@ If you store the appropriate data before creating the fstab file, you don't even
 ```console
 chroot# UEFI_UUID=$(blkid -s UUID -o value /dev/sda1)
 chroot# GRUB_UUID=$(blkid -s UUID -o value /dev/sda2)
-chroot# ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/cryptoroot)
+chroot# ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/cryptroot)
 chroot# cat <<EOF > /etc/fstab
 UUID=$ROOT_UUID / btrfs $BTRFS_OPTS,subvol=@ 0 1
 UUID=$UEFI_UUID /efi vfat defaults,noatime 0 2

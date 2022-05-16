@@ -17,7 +17,6 @@ In order to have an encrypted swap, let's use a more clean approach by using a _
 _duh_, swap. For this example, I'll create a swapfile of 16 GiB, but you can choose the best size
 for your installation:
 ```console
-chroot# btrfs subvolume create /var/swap
 chroot# truncate -s 0 /var/swap/swapfile
 chroot# chattr +C /var/swap/swapfile
 chroot# btrfs property set /var/swap/swapfile compression none
